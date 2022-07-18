@@ -1,0 +1,13 @@
+Logic for zipping it through server:
+	1. Axios api used to call post method. Axios method was properly used as it was able to send the data and retrieve the blob type data which is required for downloading the file.
+	2. In the mvc controller a zip archive object is created which consumes a memory stream object
+	3. A new entry is created for each file type
+	4. For the pdf file which is a url, a http client is created and an async request is made on the url to get the data as byte array
+	5. The byte array is then added to the entry to the zip archive
+	6. Default proxy setting needs to be added in web.config to be able to download the pdf data
+	7. The reason for this is given in the below link:
+	8. https://stackoverflow.com/questions/8224706/why-do-i-get-an-unable-to-connect-to-the-remote-server-exception-from-a-web-app
+	  I too was in a similar situation while using HttpClient class from System.Net.Http namespace. I was trying to make a network call which goes through the company proxy server.
+  	While this HttpClient call was able to successfully resolve the IP of the dns when called from a console app in visual studio the dns resolution failed when the call was made from a Web API. And it turned out that I had to have this entry in the web.config of the web api app.
+  9.Once all the files are added to archive. The ziparchive memory stream is then sent to frontend
+    
